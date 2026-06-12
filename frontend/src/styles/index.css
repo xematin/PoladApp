@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap');
+@import './variables.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-deep);
+  color: var(--steel);
+  font-family: 'Vazirmatn', system-ui, sans-serif;
+  direction: rtl;
+}
+
+#root {
+  min-height: 100vh;
+  background-color: var(--bg-deep);
+}
+
+/* ---- Glass button base styles ---- */
+.glass-active {
+  background: var(--glass-active-bg);
+  color: var(--light-blue);
+  border-top: 1px solid var(--glass-active-border-top);
+  border-left: 1px solid var(--glass-active-border-left);
+  border-bottom: 1px solid var(--glass-active-border-bottom);
+  border-right: 1px solid var(--glass-active-border-right);
+}
+
+.glass-inactive {
+  background: var(--glass-inactive-bg);
+  color: var(--muted);
+  border-top: 1px solid var(--glass-inactive-border-top);
+  border-left: 1px solid var(--glass-inactive-border-left);
+  border-bottom: 1px solid var(--glass-inactive-border-bottom);
+  border-right: 1px solid var(--glass-inactive-border-right);
+}
+
+.glass-cta {
+  background: var(--cta-bg);
+  color: #ffffff;
+  font-weight: 800;
+  border-radius: 50px;
+  border-top: 1px solid var(--cta-border-top);
+  border-left: 1px solid var(--cta-border-left);
+  border-bottom: 1px solid var(--cta-border-bottom);
+  border-right: 1px solid var(--cta-border-right);
+}
+
+/* Page wrapper leaves room for the floating nav */
+.page {
+  padding: 0 16px 100px 16px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+input,
+button {
+  font-family: inherit;
+}
+
+input::placeholder {
+  color: var(--inactive-el);
+}
+
+button {
+  cursor: pointer;
+  transition: transform 0.08s ease, filter 0.15s ease;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Hide scrollbars for a native-app feel */
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}

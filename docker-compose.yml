@@ -1,0 +1,91 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: poladapp_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - poladapp_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: poladapp_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - poladapp_net
+
+  backend:
+    build: ./backend
+    container_name: poladapp_backend
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - poladapp_net
+
+  celery_worker:
+    build: ./backend
+    container_name: poladapp_celery_worker
+    restart: unless-stopped
+    command: celery -A config worker -l info
+    env_file: .env
+    depends_on:
+      - backend
+      - redis
+    networks:
+      - poladapp_net
+
+  celery_beat:
+    build: ./backend
+    container_name: poladapp_celery_beat
+    restart: unless-stopped
+    command: celery -A config beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    env_file: .env
+    depends_on:
+      - backend
+      - redis
+    networks:
+      - poladapp_net
+
+  bot:
+    build: ./bot
+    container_name: poladapp_bot
+    restart: unless-stopped
+    command: python main.py
+    env_file: .env
+    depends_on:
+      - backend
+    networks:
+      - poladapp_net
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  poladapp_net:
+    driver: bridge

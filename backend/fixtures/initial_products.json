@@ -1,0 +1,80 @@
+[
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "name": "پرمیوم ۳ ماهه",
+      "product_type": "PREMIUM",
+      "duration_months": 3,
+      "stars_amount": null,
+      "price_toman": 2250000,
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "name": "پرمیوم ۶ ماهه",
+      "product_type": "PREMIUM",
+      "duration_months": 6,
+      "stars_amount": null,
+      "price_toman": 4200000,
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+      "name": "پرمیوم ۱۲ ماهه",
+      "product_type": "PREMIUM",
+      "duration_months": 12,
+      "stars_amount": null,
+      "price_toman": 7800000,
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+      "name": "استارز ۱۰۰",
+      "product_type": "STARS",
+      "duration_months": null,
+      "stars_amount": 100,
+      "price_toman": 850000,
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+      "name": "استارز ۵۰۰",
+      "product_type": "STARS",
+      "duration_months": null,
+      "stars_amount": 500,
+      "price_toman": 3900000,
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+      "name": "استارز ۱۰۰۰",
+      "product_type": "STARS",
+      "duration_months": null,
+      "stars_amount": 1000,
+      "price_toman": 7500000,
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  }
+]

@@ -1,0 +1,39 @@
+:root {
+  /* Backgrounds */
+  --bg-deep: #080c14;
+  --bg-surface: #0f1824;
+  --bg-hero: #0d1a2d;
+  --bg-input: #080c14;
+
+  /* Text & accents */
+  --steel: #c8cdd6;
+  --glow-blue: #2a7fff;
+  --light-blue: #5ba4ff;
+  --muted: #6b7a8d;
+  --inactive-el: #2a3a4a;
+
+  /* Borders */
+  --border-dark: #1a2535;
+  --border-hero: #1e3050;
+
+  /* Glass — active */
+  --glass-active-bg: rgba(42, 127, 255, 0.2);
+  --glass-active-border-top: rgba(160, 210, 255, 0.55);
+  --glass-active-border-left: rgba(160, 210, 255, 0.45);
+  --glass-active-border-bottom: rgba(15, 50, 130, 0.5);
+  --glass-active-border-right: rgba(15, 50, 130, 0.45);
+
+  /* Glass — inactive */
+  --glass-inactive-bg: rgba(255, 255, 255, 0.04);
+  --glass-inactive-border-top: rgba(255, 255, 255, 0.15);
+  --glass-inactive-border-left: rgba(255, 255, 255, 0.12);
+  --glass-inactive-border-bottom: rgba(0, 0, 0, 0.3);
+  --glass-inactive-border-right: rgba(0, 0, 0, 0.25);
+
+  /* CTA */
+  --cta-bg: #2a7fff;
+  --cta-border-top: rgba(200, 230, 255, 0.5);
+  --cta-border-left: rgba(200, 230, 255, 0.4);
+  --cta-border-bottom: rgba(10, 40, 120, 0.5);
+  --cta-border-right: rgba(10, 40, 120, 0.45);
+}
