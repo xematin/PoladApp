@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import SurfaceCard from '../components/SurfaceCard'
-import GlassPill from '../components/GlassPill'
 import StatusBar from '../components/StatusBar'
 import HeaderBar from '../components/HeaderBar'
+import GlassPill from '../components/GlassPill'
 import api from '../api/client'
 
 const BOT_USERNAME = import.meta.env.VITE_BOT_USERNAME || 'PoladAppBot'
@@ -14,9 +13,8 @@ function initials(name) {
   if (parts.length === 1) return parts[0].slice(0, 2)
   return (parts[0][0] || '') + (parts[1][0] || '')
 }
-
-function formatToman(value) {
-  return Number(value || 0).toLocaleString('fa-IR')
+function fmt(v) {
+  return Number(v || 0).toLocaleString('en-US')
 }
 
 export default function ProfilePage({ user }) {
@@ -34,17 +32,15 @@ export default function ProfilePage({ user }) {
     let active = true
     api
       .getUserProfile(tgId)
-      .then((data) => active && setProfile(data))
-      .catch((err) => active && setError(err.message))
+      .then((d) => active && setProfile(d))
+      .catch((e) => active && setError(e.message))
       .finally(() => active && setLoading(false))
     return () => {
       active = false
     }
   }, [user])
 
-  const referralLink = profile
-    ? `t.me/${BOT_USERNAME}?start=${profile.referral_code}`
-    : ''
+  const referralLink = profile ? `t.me/${BOT_USERNAME}?start=${profile.referral_code}` : ''
 
   const handleCopy = async () => {
     try {
@@ -61,21 +57,16 @@ export default function ProfilePage({ user }) {
       <div className="page">
         <StatusBar />
         <HeaderBar />
-        <p style={{ color: 'var(--muted)', textAlign: 'center', marginTop: 40 }}>
-          در حال بارگذاری...
-        </p>
+        <p style={{ color: 'var(--muted)', textAlign: 'center', marginTop: 40 }}>در حال بارگذاری…</p>
       </div>
     )
   }
-
   if (error || !profile) {
     return (
       <div className="page">
         <StatusBar />
         <HeaderBar />
-        <p style={{ color: '#ff6b6b', textAlign: 'center', marginTop: 40 }}>
-          {error || 'پروفایل یافت نشد.'}
-        </p>
+        <p style={{ color: 'var(--danger)', textAlign: 'center', marginTop: 40 }}>{error || 'پروفایل یافت نشد.'}</p>
       </div>
     )
   }
@@ -85,107 +76,76 @@ export default function ProfilePage({ user }) {
       <StatusBar />
       <HeaderBar />
 
-      {/* Avatar + name */}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          marginTop: 20,
-          marginBottom: 20,
-        }}
-      >
+      {/* Avatar */}
+      <div className="fade-up" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 16, marginBottom: 22 }}>
         <div
-          style={{
-            width: 80,
-            height: 80,
-            borderRadius: '50%',
-            background: 'rgba(42,127,255,0.15)',
-            border: '1px solid var(--border-hero)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'var(--light-blue)',
-            fontSize: 28,
-            fontWeight: 800,
-            direction: 'ltr',
-          }}
+          className="logo-badge"
+          style={{ width: 88, height: 88, borderRadius: '50%' }}
         >
-          {initials(profile.full_name)}
+          <span
+            className="num"
+            style={{ position: 'relative', zIndex: 1, color: '#fff', fontSize: 30, fontWeight: 700, textTransform: 'uppercase' }}
+          >
+            {initials(profile.full_name)}
+          </span>
         </div>
-        <div style={{ color: 'var(--steel)', fontWeight: 800, fontSize: 18, marginTop: 12 }}>
-          {profile.full_name}
-        </div>
+        <div style={{ color: '#fff', fontWeight: 800, fontSize: 19, marginTop: 14 }}>{profile.full_name}</div>
         {profile.username && (
-          <div style={{ color: 'var(--muted)', fontSize: 14, direction: 'ltr' }}>
-            @{profile.username}
-          </div>
+          <div className="num" style={{ color: 'var(--muted)', fontSize: 14, marginTop: 2 }}>@{profile.username}</div>
         )}
       </div>
 
       {/* Stats */}
-      <div style={{ display: 'flex', gap: 12 }}>
-        <SurfaceCard style={{ flex: 1, textAlign: 'center' }}>
-          <div style={{ color: 'var(--glow-blue)', fontSize: 24, fontWeight: 800 }}>
-            {profile.stats?.total_orders ?? 0}
+      <div className="fade-up" style={{ display: 'flex', gap: 12, animationDelay: '0.08s' }}>
+        <div className="glass-card" style={{ flex: 1, padding: 18 }}>
+          <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+            <div className="num" style={{ color: '#fff', fontSize: 28, fontWeight: 700 }}>
+              {profile.stats?.total_orders ?? 0}
+            </div>
+            <div style={{ color: 'var(--muted)', fontSize: 12, marginTop: 6 }}>سفارش‌ها</div>
           </div>
-          <div style={{ color: 'var(--muted)', fontSize: 13, marginTop: 4 }}>
-            تعداد سفارشات
+        </div>
+        <div className="glass-card" style={{ flex: 1, padding: 18 }}>
+          <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+            <div className="num" style={{ color: 'var(--light-blue)', fontSize: 28, fontWeight: 700 }}>
+              {fmt(profile.balance)}
+            </div>
+            <div style={{ color: 'var(--muted)', fontSize: 12, marginTop: 6 }}>کیف پول (تومان)</div>
           </div>
-        </SurfaceCard>
-        <SurfaceCard style={{ flex: 1, textAlign: 'center' }}>
-          <div style={{ color: 'var(--glow-blue)', fontSize: 24, fontWeight: 800 }}>
-            {formatToman(profile.balance)}
-          </div>
-          <div style={{ color: 'var(--muted)', fontSize: 13, marginTop: 4 }}>
-            موجودی کیف پول (تومان)
-          </div>
-        </SurfaceCard>
+        </div>
       </div>
 
       {/* Referral */}
-      <SurfaceCard style={{ marginTop: 14 }}>
-        <div style={{ color: 'var(--steel)', fontWeight: 700, marginBottom: 10 }}>
-          🎁 دعوت از دوستان
-        </div>
-        <div style={{ color: 'var(--muted)', fontSize: 13, marginBottom: 8 }}>
-          کد معرف شما:
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: 10,
-          }}
-        >
-          <span
-            style={{
-              color: 'var(--light-blue)',
-              fontWeight: 800,
-              fontSize: 18,
-              direction: 'ltr',
-              letterSpacing: 1,
-            }}
+      <div className="glass-card fade-up" style={{ marginTop: 16, padding: 20, animationDelay: '0.14s' }}>
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+            <span style={{ fontSize: 18 }}>🎁</span>
+            <span style={{ color: '#fff', fontWeight: 700, fontSize: 15 }}>دعوت از دوستان</span>
+          </div>
+          <div style={{ color: 'var(--muted)', fontSize: 12.5, marginBottom: 14, lineHeight: 1.7 }}>
+            با کد معرف خود، دوستانت رو دعوت کن و پاداش بگیر.
+          </div>
+
+          <div
+            className="glass-soft"
+            style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 16px' }}
           >
-            {profile.referral_code}
-          </span>
-          <GlassPill active={copied} onClick={handleCopy}>
-            📋 {copied ? 'کپی شد!' : 'کپی لینک'}
-          </GlassPill>
+            <span className="num" style={{ color: 'var(--light-blue)', fontWeight: 700, fontSize: 20, letterSpacing: 2 }}>
+              {profile.referral_code}
+            </span>
+            <GlassPill active={copied} onClick={handleCopy}>
+              {copied ? '✓ کپی شد' : '📋 کپی لینک'}
+            </GlassPill>
+          </div>
+
+          <div
+            className="num"
+            style={{ marginTop: 12, color: 'var(--muted)', fontSize: 11.5, wordBreak: 'break-all', textAlign: 'center' }}
+          >
+            {referralLink}
+          </div>
         </div>
-        <div
-          style={{
-            marginTop: 10,
-            color: 'var(--muted)',
-            fontSize: 12,
-            direction: 'ltr',
-            wordBreak: 'break-all',
-          }}
-        >
-          {referralLink}
-        </div>
-      </SurfaceCard>
+      </div>
     </div>
   )
 }

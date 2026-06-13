@@ -1,19 +1,10 @@
 /**
- * SurfaceCard — a rounded surface container used for inputs and summaries.
+ * SurfaceCard — a glassmorphism card container.
  */
 export default function SurfaceCard({ children, className = '', style = {} }) {
   return (
-    <div
-      className={className}
-      style={{
-        background: 'var(--bg-surface)',
-        border: '1px solid var(--border-dark)',
-        borderRadius: 20,
-        padding: 16,
-        ...style,
-      }}
-    >
-      {children}
+    <div className={`glass-card ${className}`} style={{ padding: 16, ...style }}>
+      <div style={{ position: 'relative', zIndex: 1 }}>{children}</div>
     </div>
   )
 }

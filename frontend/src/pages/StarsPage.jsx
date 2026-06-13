@@ -1,15 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
-import SurfaceCard from '../components/SurfaceCard'
-import GlassButton from '../components/GlassButton'
-import TabSwitcher from '../components/TabSwitcher'
 import StatusBar from '../components/StatusBar'
 import HeaderBar from '../components/HeaderBar'
-import Logo from '../components/Logo'
+import BrandHeader from '../components/BrandHeader'
+import TabSwitcher from '../components/TabSwitcher'
+import PriceBox from '../components/PriceBox'
+import GlassButton from '../components/GlassButton'
 import api from '../api/client'
 
-function formatToman(value) {
-  return Number(value || 0).toLocaleString('fa-IR')
+function fmt(v) {
+  return Number(v || 0).toLocaleString('en-US')
 }
 
 export default function StarsPage({ products, user, onNavigate }) {
@@ -18,7 +18,15 @@ export default function StarsPage({ products, user, onNavigate }) {
   const [submitting, setSubmitting] = useState(false)
   const [message, setMessage] = useState(null)
 
-  const selected = products.find((p) => p.id === selectedId) || null
+  useEffect(() => {
+    if (products.length && selectedId == null) setSelectedId(products[1]?.id ?? products[0].id)
+  }, [products, selectedId])
+
+  const selected = useMemo(
+    () => products.find((p) => p.id === selectedId) || null,
+    [products, selectedId]
+  )
+  const total = selected ? Number(selected.price_toman) : 0
 
   const handlePay = async () => {
     const recipient = username.trim().replace(/^@/, '')
@@ -40,13 +48,8 @@ export default function StarsPage({ products, user, onNavigate }) {
         payment_method: 'NOWPAYMENTS',
       })
       const invoice = await api.createNowPaymentsInvoice(order.id)
-      if (invoice?.invoice_url) {
-        window.open(invoice.invoice_url, '_blank')
-      }
-      setMessage({
-        type: 'success',
-        text: `سفارش ثبت شد. کد رهگیری: ${order.tracking_code}`,
-      })
+      if (invoice?.invoice_url) window.open(invoice.invoice_url, '_blank')
+      setMessage({ type: 'success', text: `سفارش ثبت شد. کد رهگیری: ${order.tracking_code}` })
     } catch (err) {
       setMessage({ type: 'error', text: err.message || 'خطا در ثبت سفارش' })
     } finally {
@@ -58,111 +61,127 @@ export default function StarsPage({ products, user, onNavigate }) {
     <div className="page">
       <StatusBar />
       <HeaderBar />
+      <BrandHeader tagline="استارز تلگرام · ارسال فوری" />
 
-      {/* Hero with tabs */}
-      <div
-        style={{
-          background: 'var(--bg-hero)',
-          border: '1px solid var(--border-hero)',
-          borderRadius: 24,
-          padding: 18,
-          marginTop: 12,
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 10,
-            marginBottom: 16,
-          }}
-        >
-          <Logo size={34} />
-          <span style={{ color: 'var(--steel)', fontWeight: 800, fontSize: 18 }}>
-            PoladApp
-          </span>
-        </div>
-        <TabSwitcher
-          active="stars"
-          onChange={(t) => t === 'premium' && onNavigate('premium')}
-        />
+      <div className="fade-up" style={{ animationDelay: '0.05s' }}>
+        <TabSwitcher active="stars" onChange={(t) => t === 'premium' && onNavigate('premium')} />
       </div>
 
-      {/* Stars packages */}
-      <div style={{ marginTop: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {products.map((p) => {
-          const isActive = p.id === selectedId
-          return (
-            <button
-              key={p.id}
-              onClick={() => setSelectedId(p.id)}
-              className={isActive ? 'glass-active' : 'glass-inactive'}
-              style={{
-                borderRadius: 18,
-                padding: '16px 18px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                width: '100%',
-              }}
-            >
-              <span style={{ fontSize: 16, fontWeight: 700 }}>
-                ⭐ {p.stars_amount} استارز
-              </span>
-              <span
+      {/* Star packages grid */}
+      <div className="fade-up" style={{ marginTop: 22, animationDelay: '0.1s' }}>
+        <div className="section-title">انتخاب بسته‌ی استارز</div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+          {products.map((p) => {
+            const active = p.id === selectedId
+            return (
+              <button
+                key={p.id}
+                onClick={() => setSelectedId(p.id)}
                 style={{
-                  color: isActive ? 'var(--light-blue)' : 'var(--steel)',
-                  fontWeight: 800,
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: 6,
+                  padding: '20px 12px 16px',
+                  borderRadius: 18,
+                  cursor: 'pointer',
+                  background: active
+                    ? 'linear-gradient(160deg, rgba(42,127,255,0.18), rgba(42,127,255,0.04))'
+                    : 'rgba(0,0,0,0.35)',
+                  border: active
+                    ? '1px solid rgba(120,170,255,0.55)'
+                    : '1px solid var(--border)',
+                  boxShadow: active ? '0 12px 30px -12px var(--blue-glow)' : 'none',
+                  transition: 'all 0.2s ease',
                 }}
               >
-                {formatToman(p.price_toman)} تومان
-              </span>
-            </button>
-          )
-        })}
+                <div
+                  style={{
+                    fontSize: 26,
+                    filter: active
+                      ? 'drop-shadow(0 0 10px rgba(91,164,255,0.7))'
+                      : 'grayscale(0.2) opacity(0.85)',
+                  }}
+                >
+                  ⭐
+                </div>
+                <div className="num" style={{ fontSize: 24, fontWeight: 700, color: '#fff' }}>
+                  {fmt(p.stars_amount)}
+                </div>
+                <div style={{ fontSize: 11, color: 'var(--muted)' }}>استارز</div>
+                <div
+                  style={{
+                    marginTop: 6,
+                    paddingTop: 8,
+                    width: '100%',
+                    borderTop: '1px solid var(--border)',
+                    textAlign: 'center',
+                  }}
+                >
+                  <span
+                    className="num"
+                    style={{ color: active ? 'var(--light-blue)' : 'var(--text-dim)', fontWeight: 700, fontSize: 14 }}
+                  >
+                    {fmt(p.price_toman)}
+                  </span>
+                  <span style={{ color: 'var(--muted)', fontSize: 10, marginInlineStart: 3 }}>تومان</span>
+                </div>
+              </button>
+            )
+          })}
+        </div>
       </div>
 
-      {/* Username input */}
-      <SurfaceCard style={{ marginTop: 14 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ color: 'var(--glow-blue)', fontSize: 18 }}>🔍</span>
+      {/* Recipient */}
+      <div className="fade-up" style={{ marginTop: 22, animationDelay: '0.15s' }}>
+        <div className="section-title">گیرنده‌ی استارز</div>
+        <div className="glass-soft" style={{ padding: '4px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ color: 'var(--light-blue)', fontSize: 17 }}>@</span>
           <input
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="telegram_username"
             style={{
               flex: 1,
-              background: 'var(--bg-input)',
-              border: '1px solid var(--border-dark)',
-              borderRadius: 12,
-              padding: '12px 14px',
-              color: 'var(--steel)',
-              fontSize: 15,
+              background: 'transparent',
+              border: 'none',
               outline: 'none',
+              color: 'var(--text)',
+              fontSize: 15,
+              padding: '13px 0',
               direction: 'ltr',
               textAlign: 'left',
             }}
           />
+          <span style={{ color: 'var(--muted)', fontSize: 16 }}>🔍</span>
         </div>
-      </SurfaceCard>
+      </div>
 
-      {message && (
-        <div
-          style={{
-            marginTop: 12,
-            color: message.type === 'error' ? '#ff6b6b' : 'var(--light-blue)',
-            fontSize: 13,
-            textAlign: 'center',
-          }}
-        >
-          {message.text}
+      {/* Checkout */}
+      <div className="glass-card fade-up" style={{ marginTop: 22, padding: 22, animationDelay: '0.2s' }}>
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <PriceBox totalPrice={total} />
+          <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap', margin: '16px 0' }}>
+            <span className="chip">⚡ ارسال فوری</span>
+            <span className="chip">🔒 پرداخت امن</span>
+          </div>
+          {message && (
+            <div
+              style={{
+                marginBottom: 12,
+                color: message.type === 'error' ? 'var(--danger)' : 'var(--ok)',
+                fontSize: 13,
+                textAlign: 'center',
+              }}
+            >
+              {message.text}
+            </div>
+          )}
+          <GlassButton variant="cta" onClick={handlePay} disabled={submitting}>
+            {submitting ? 'در حال پردازش…' : 'پرداخت و ارسال استارز ←'}
+          </GlassButton>
         </div>
-      )}
-
-      <div style={{ marginTop: 16 }}>
-        <GlassButton variant="cta" onClick={handlePay} disabled={submitting}>
-          {submitting ? 'در حال پردازش...' : 'پرداخت و ارسال استارز ←'}
-        </GlassButton>
       </div>
     </div>
   )

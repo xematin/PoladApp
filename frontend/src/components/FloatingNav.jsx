@@ -1,8 +1,8 @@
 /**
- * FloatingNav — iOS 26 liquid-glass floating capsule fixed at the bottom.
+ * FloatingNav — liquid-glass floating capsule with a glowing blue active pill.
  */
 const NAV_ITEMS = [
-  { key: 'vpn', label: 'خرید VPN', icon: '🛡️' },
+  { key: 'vpn', label: 'VPN', icon: '🛡️' },
   { key: 'premium', label: 'تلگرام', icon: '✈️' },
   { key: 'orders', label: 'سفارشات', icon: '📋' },
   { key: 'profile', label: 'پروفایل', icon: '👤' },
@@ -18,20 +18,17 @@ export default function FloatingNav({ active, onNavigate }) {
         right: 16,
         maxWidth: 448,
         margin: '0 auto',
-        background: 'rgba(15,24,36,0.75)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
+        background: 'rgba(10,16,26,0.72)',
+        backdropFilter: 'blur(22px)',
+        WebkitBackdropFilter: 'blur(22px)',
         borderRadius: 50,
-        borderTop: '1px solid rgba(255,255,255,0.12)',
-        borderLeft: '1px solid rgba(255,255,255,0.10)',
-        borderBottom: '1px solid rgba(0,0,0,0.35)',
-        borderRight: '1px solid rgba(0,0,0,0.30)',
-        padding: '10px 8px',
+        border: '1px solid rgba(255,255,255,0.10)',
+        padding: '9px 8px',
         display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center',
         boxShadow:
-          '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)',
+          '0 12px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.07)',
         zIndex: 100,
       }}
     >
@@ -43,19 +40,17 @@ export default function FloatingNav({ active, onNavigate }) {
               key={item.key}
               onClick={() => onNavigate(item.key)}
               style={{
-                background: '#2A7FFF',
+                background: 'linear-gradient(135deg, #2a7fff, #1657c7)',
                 borderRadius: 50,
-                padding: '8px 18px',
-                color: '#ffffff',
+                padding: '9px 18px',
+                color: '#fff',
                 fontWeight: 700,
                 fontSize: 13,
+                border: '1px solid rgba(120,170,255,0.5)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 6,
-                borderTop: '1px solid rgba(160,210,255,0.55)',
-                borderLeft: '1px solid rgba(160,210,255,0.45)',
-                borderBottom: '1px solid rgba(10,40,120,0.50)',
-                borderRight: '1px solid rgba(10,40,120,0.45)',
+                boxShadow: '0 8px 20px -6px var(--blue-glow)',
               }}
             >
               <span>{item.icon}</span>
@@ -70,16 +65,16 @@ export default function FloatingNav({ active, onNavigate }) {
             style={{
               background: 'none',
               border: 'none',
-              color: '#6B7A8D',
+              color: 'var(--muted)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: 2,
-              fontSize: 11,
-              padding: '4px 8px',
+              gap: 3,
+              fontSize: 10.5,
+              padding: '4px 10px',
             }}
           >
-            <span style={{ fontSize: 18, opacity: 0.7 }}>{item.icon}</span>
+            <span style={{ fontSize: 18, opacity: 0.75 }}>{item.icon}</span>
             <span>{item.label}</span>
           </button>
         )

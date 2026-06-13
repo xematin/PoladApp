@@ -1,7 +1,8 @@
 /**
- * GlassButton — a 3D glass-bordered button.
- *
- * variant: 'active' | 'inactive' | 'cta'
+ * GlassButton.
+ *   variant 'cta'      -> glowing blue gradient CTA (full width)
+ *   variant 'active'   -> selected glass pill (blue tint)
+ *   variant 'inactive' -> ghost glass pill
  */
 export default function GlassButton({
   children,
@@ -10,32 +11,50 @@ export default function GlassButton({
   disabled = false,
   className = '',
   style = {},
-  radius = 14,
   type = 'button',
 }) {
-  const variantClass =
-    variant === 'cta'
-      ? 'glass-cta'
-      : variant === 'active'
-      ? 'glass-active'
-      : 'glass-inactive'
-
-  const baseStyle = {
-    borderRadius: variant === 'cta' ? 50 : radius,
-    padding: variant === 'cta' ? '16px 24px' : '10px 16px',
-    fontWeight: variant === 'cta' ? 800 : 600,
-    fontSize: 15,
-    width: variant === 'cta' ? '100%' : undefined,
-    opacity: disabled ? 0.5 : 1,
-    transition: 'all 0.15s ease',
-    ...style,
+  if (variant === 'cta') {
+    return (
+      <button
+        type={type}
+        className={`btn-cta ${className}`}
+        style={style}
+        onClick={onClick}
+        disabled={disabled}
+      >
+        {children}
+      </button>
+    )
   }
 
+  const isActive = variant === 'active'
   return (
     <button
       type={type}
-      className={`${variantClass} ${className}`}
-      style={baseStyle}
+      className={className}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 6,
+        padding: '11px 16px',
+        borderRadius: 12,
+        fontFamily: 'inherit',
+        fontWeight: 700,
+        fontSize: 14,
+        cursor: 'pointer',
+        color: isActive ? '#fff' : 'var(--muted)',
+        background: isActive
+          ? 'linear-gradient(135deg, rgba(42,127,255,0.9), rgba(22,87,199,0.9))'
+          : 'rgba(255,255,255,0.04)',
+        border: isActive
+          ? '1px solid rgba(120,170,255,0.5)'
+          : '1px solid var(--border)',
+        boxShadow: isActive ? '0 6px 18px -6px var(--blue-glow)' : 'none',
+        opacity: disabled ? 0.5 : 1,
+        transition: 'all 0.18s ease',
+        ...style,
+      }}
       onClick={onClick}
       disabled={disabled}
     >

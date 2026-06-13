@@ -1,27 +1,28 @@
-import GlassButton from './GlassButton'
-
 /**
- * TabSwitcher — premium / stars toggle (border-radius 14px).
+ * TabSwitcher — premium / stars segmented control with a sliding glass thumb.
  */
 export default function TabSwitcher({ active, onChange }) {
   return (
-    <div style={{ display: 'flex', gap: 8 }}>
-      <GlassButton
-        variant={active === 'premium' ? 'active' : 'inactive'}
-        radius={14}
+    <div className="seg-track">
+      <div
+        className="seg-thumb"
+        style={{
+          width: 'calc(50% - 6px)',
+          right: active === 'premium' ? 5 : 'calc(50% + 1px)',
+        }}
+      />
+      <button
+        className={`seg-btn ${active === 'premium' ? 'active' : ''}`}
         onClick={() => onChange('premium')}
-        style={{ flex: 1 }}
       >
         💎 پرمیوم
-      </GlassButton>
-      <GlassButton
-        variant={active === 'stars' ? 'active' : 'inactive'}
-        radius={14}
+      </button>
+      <button
+        className={`seg-btn ${active === 'stars' ? 'active' : ''}`}
         onClick={() => onChange('stars')}
-        style={{ flex: 1 }}
       >
         ⭐ استارز
-      </GlassButton>
+      </button>
     </div>
   )
 }

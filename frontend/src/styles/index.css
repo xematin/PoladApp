@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import './variables.css';
 
 @tailwind base;
@@ -14,74 +14,340 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--bg-deep);
-  color: var(--steel);
+  background-color: var(--bg);
+  color: var(--text);
   font-family: 'Vazirmatn', system-ui, sans-serif;
   direction: rtl;
 }
 
 #root {
   min-height: 100vh;
-  background-color: var(--bg-deep);
+  position: relative;
+  background-color: var(--bg);
 }
 
-/* ---- Glass button base styles ---- */
-.glass-active {
-  background: var(--glass-active-bg);
-  color: var(--light-blue);
-  border-top: 1px solid var(--glass-active-border-top);
-  border-left: 1px solid var(--glass-active-border-left);
-  border-bottom: 1px solid var(--glass-active-border-bottom);
-  border-right: 1px solid var(--glass-active-border-right);
+/* ============================================================
+   Ambient background — radial blue glows + grid pattern
+   (the "squared" glass aesthetic)
+   ============================================================ */
+#root::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(680px circle at 18% 8%, rgba(42, 127, 255, 0.16), transparent 46%),
+    radial-gradient(600px circle at 85% 22%, rgba(42, 127, 255, 0.08), transparent 50%),
+    radial-gradient(700px circle at 50% 108%, rgba(42, 127, 255, 0.12), transparent 55%);
+  pointer-events: none;
+  z-index: 0;
 }
 
-.glass-inactive {
-  background: var(--glass-inactive-bg);
-  color: var(--muted);
-  border-top: 1px solid var(--glass-inactive-border-top);
-  border-left: 1px solid var(--glass-inactive-border-left);
-  border-bottom: 1px solid var(--glass-inactive-border-bottom);
-  border-right: 1px solid var(--glass-inactive-border-right);
+#root::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 35%, transparent 85%);
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 35%, transparent 85%);
+  pointer-events: none;
+  z-index: 0;
 }
 
-.glass-cta {
-  background: var(--cta-bg);
-  color: #ffffff;
+/* ============================================================
+   Numbers — JetBrains Mono, LTR, tabular
+   ============================================================ */
+.num {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+  direction: ltr;
+  unicode-bidi: isolate;
+  letter-spacing: -0.01em;
+}
+
+/* ============================================================
+   Glass cards
+   ============================================================ */
+.glass-card {
+  position: relative;
+  background: linear-gradient(180deg, var(--surface-strong), var(--surface));
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 30px 60px -24px rgba(0, 0, 0, 0.7),
+    0 8px 24px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* subtle top sheen */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(120% 60% at 50% -10%, rgba(255, 255, 255, 0.07), transparent 60%);
+  pointer-events: none;
+}
+
+.glass-soft {
+  background: rgba(0, 0, 0, 0.38);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+/* ============================================================
+   Section title with gradient divider lines
+   ============================================================ */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+  margin: 0 2px 14px;
+}
+.section-title::before,
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+}
+
+/* ============================================================
+   Brand logo badge (glowing rounded square)
+   ============================================================ */
+.logo-badge {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(42, 127, 255, 0.18), rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--border-hero);
+  box-shadow:
+    0 0 40px -6px var(--blue-glow),
+    0 1px 0 rgba(255, 255, 255, 0.12) inset;
+  overflow: hidden;
+}
+.logo-badge::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(circle at 50% 25%, rgba(91, 164, 255, 0.25), transparent 60%);
+  pointer-events: none;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn-cta {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 17px 22px;
+  border: none;
+  border-radius: var(--r-btn);
+  background: linear-gradient(135deg, #2a7fff, #1657c7);
+  color: #fff;
+  font-family: inherit;
   font-weight: 800;
-  border-radius: 50px;
-  border-top: 1px solid var(--cta-border-top);
-  border-left: 1px solid var(--cta-border-left);
-  border-bottom: 1px solid var(--cta-border-bottom);
-  border-right: 1px solid var(--cta-border-right);
+  font-size: 15.5px;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow:
+    0 10px 30px -8px var(--blue-glow),
+    0 1px 0 rgba(255, 255, 255, 0.35) inset;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.btn-cta::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  left: -60%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  animation: shine 3.4s ease-in-out infinite;
+}
+.btn-cta:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 16px 40px -8px var(--blue-glow), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+}
+.btn-cta:active {
+  transform: scale(0.985);
+}
+.btn-cta:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.btn-cta:disabled::after {
+  display: none;
 }
 
-/* Page wrapper leaves room for the floating nav */
+@keyframes shine {
+  0% { left: -60%; }
+  55%, 100% { left: 130%; }
+}
+
+/* ============================================================
+   Segmented control (tabs)
+   ============================================================ */
+.seg-track {
+  position: relative;
+  display: flex;
+  gap: 4px;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+.seg-btn {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px 10px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.seg-btn.active {
+  color: #fff;
+}
+.seg-thumb {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(42, 127, 255, 0.9), rgba(22, 87, 199, 0.9));
+  box-shadow: 0 6px 18px -6px var(--blue-glow), 0 1px 0 rgba(255, 255, 255, 0.25) inset;
+  transition: right 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 0;
+}
+
+/* ============================================================
+   Badges
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 50px;
+  padding: 5px 12px;
+  font-size: 11.5px;
+  font-weight: 700;
+  border: 1px solid rgba(42, 127, 255, 0.3);
+  color: var(--light-blue);
+  background: rgba(42, 127, 255, 0.12);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--text-dim);
+  padding: 6px 11px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+}
+
+/* ============================================================
+   Inputs
+   ============================================================ */
+input {
+  font-family: inherit;
+}
+input::placeholder {
+  color: var(--inactive-el);
+}
+.input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 13px 14px;
+  color: var(--text);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.input:focus {
+  border-color: rgba(42, 127, 255, 0.5);
+  box-shadow: 0 0 0 3px rgba(42, 127, 255, 0.12);
+}
+
+/* ============================================================
+   Empty state
+   ============================================================ */
+.empty-state {
+  text-align: center;
+  padding: 36px 16px;
+}
+.empty-state-icon {
+  font-size: 44px;
+  margin-bottom: 12px;
+  opacity: 0.7;
+}
+.empty-state-title {
+  color: var(--text);
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+.empty-state-msg {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* ============================================================
+   Layout
+   ============================================================ */
 .page {
-  padding: 0 16px 100px 16px;
+  position: relative;
+  z-index: 1;
+  padding: 0 16px 110px 16px;
   max-width: 480px;
   margin: 0 auto;
 }
 
-input,
-button {
-  font-family: inherit;
-}
-
-input::placeholder {
-  color: var(--inactive-el);
-}
-
 button {
   cursor: pointer;
-  transition: transform 0.08s ease, filter 0.15s ease;
 }
 
-button:active {
-  transform: scale(0.97);
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.fade-up { opacity: 0; animation: fadeUp 0.6s ease forwards; }
 
-/* Hide scrollbars for a native-app feel */
-::-webkit-scrollbar {
-  width: 0;
-  background: transparent;
-}
+/* Hide scrollbars */
+::-webkit-scrollbar { width: 0; background: transparent; }

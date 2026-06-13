@@ -1,39 +1,41 @@
 :root {
-  /* Backgrounds */
-  --bg-deep: #080c14;
-  --bg-surface: #0f1824;
-  --bg-hero: #0d1a2d;
-  --bg-input: #080c14;
+  /* ===== Base (deep, slightly blue-tinted black) ===== */
+  --bg: #06090f;
+  --bg-deep: #06090f;
 
-  /* Text & accents */
-  --steel: #c8cdd6;
-  --glow-blue: #2a7fff;
-  --light-blue: #5ba4ff;
-  --muted: #6b7a8d;
-  --inactive-el: #2a3a4a;
+  /* Glass surfaces */
+  --surface: rgba(255, 255, 255, 0.035);
+  --surface-strong: rgba(255, 255, 255, 0.06);
+  --bg-surface: rgba(255, 255, 255, 0.04);
+  --bg-hero: rgba(255, 255, 255, 0.05);
+  --bg-input: rgba(0, 0, 0, 0.4);
 
   /* Borders */
-  --border-dark: #1a2535;
-  --border-hero: #1e3050;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --border-dark: rgba(255, 255, 255, 0.08);
+  --border-hero: rgba(120, 170, 255, 0.18);
 
-  /* Glass — active */
-  --glass-active-bg: rgba(42, 127, 255, 0.2);
-  --glass-active-border-top: rgba(160, 210, 255, 0.55);
-  --glass-active-border-left: rgba(160, 210, 255, 0.45);
-  --glass-active-border-bottom: rgba(15, 50, 130, 0.5);
-  --glass-active-border-right: rgba(15, 50, 130, 0.45);
+  /* Text */
+  --text: #f5f7fa;
+  --steel: #c8cdd6;
+  --text-dim: #aab4c2;
+  --muted: #74839a;
+  --text-muted: #74839a;
+  --inactive-el: #3a4658;
 
-  /* Glass — inactive */
-  --glass-inactive-bg: rgba(255, 255, 255, 0.04);
-  --glass-inactive-border-top: rgba(255, 255, 255, 0.15);
-  --glass-inactive-border-left: rgba(255, 255, 255, 0.12);
-  --glass-inactive-border-bottom: rgba(0, 0, 0, 0.3);
-  --glass-inactive-border-right: rgba(0, 0, 0, 0.25);
+  /* Brand blue (from the logo) */
+  --glow-blue: #2a7fff;
+  --light-blue: #5ba4ff;
+  --blue-deep: #1657c7;
+  --blue-glow: rgba(42, 127, 255, 0.55);
 
-  /* CTA */
-  --cta-bg: #2a7fff;
-  --cta-border-top: rgba(200, 230, 255, 0.5);
-  --cta-border-left: rgba(200, 230, 255, 0.4);
-  --cta-border-bottom: rgba(10, 40, 120, 0.5);
-  --cta-border-right: rgba(10, 40, 120, 0.45);
+  /* Status */
+  --ok: #4ade80;
+  --warn: #fbbf24;
+  --danger: #f87171;
+
+  /* Radii */
+  --r-card: 22px;
+  --r-btn: 14px;
 }

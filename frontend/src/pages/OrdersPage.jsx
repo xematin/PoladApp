@@ -1,34 +1,33 @@
 import { useEffect, useState } from 'react'
 
-import SurfaceCard from '../components/SurfaceCard'
 import StatusBar from '../components/StatusBar'
 import HeaderBar from '../components/HeaderBar'
 import api from '../api/client'
 
-const STATUS_CONFIG = {
-  PENDING: { label: 'در انتظار', bg: 'rgba(255,255,255,0.04)', border: '#1a2535', color: '#6B7A8D' },
-  PAID: { label: 'پرداخت‌شده', bg: 'rgba(42,127,255,0.15)', border: '#1e3050', color: '#5BA4FF' },
-  PROCESSING: { label: 'در حال پردازش', bg: 'rgba(42,127,255,0.10)', border: '#1e3050', color: '#5BA4FF' },
-  DELIVERED: { label: 'تحویل‌شده', bg: 'rgba(26,58,42,0.4)', border: '#1a3a2a', color: '#5ddf9f' },
-  FAILED: { label: 'ناموفق', bg: 'rgba(58,26,26,0.4)', border: '#3a1a1a', color: '#ff6b6b' },
-  REFUNDED: { label: 'بازگشت‌خورده', bg: 'rgba(255,255,255,0.04)', border: '#1a2535', color: '#6B7A8D' },
+const STATUS = {
+  PENDING: { label: 'در انتظار', color: '#aab4c2', bg: 'rgba(255,255,255,0.05)', bd: 'var(--border)' },
+  PAID: { label: 'پرداخت‌شده', color: '#5ba4ff', bg: 'rgba(42,127,255,0.14)', bd: 'rgba(42,127,255,0.3)' },
+  PROCESSING: { label: 'در حال پردازش', color: '#5ba4ff', bg: 'rgba(42,127,255,0.10)', bd: 'rgba(42,127,255,0.25)' },
+  DELIVERED: { label: 'تحویل‌شده', color: '#4ade80', bg: 'rgba(74,222,128,0.12)', bd: 'rgba(74,222,128,0.3)' },
+  FAILED: { label: 'ناموفق', color: '#f87171', bg: 'rgba(248,113,113,0.12)', bd: 'rgba(248,113,113,0.3)' },
+  REFUNDED: { label: 'بازگشت‌خورده', color: '#aab4c2', bg: 'rgba(255,255,255,0.05)', bd: 'var(--border)' },
 }
 
-function StatusBadge({ status }) {
-  const cfg = STATUS_CONFIG[status] || STATUS_CONFIG.PENDING
+function Badge({ status }) {
+  const s = STATUS[status] || STATUS.PENDING
   return (
     <span
       style={{
-        background: cfg.bg,
-        border: `1px solid ${cfg.border}`,
-        color: cfg.color,
+        background: s.bg,
+        border: `1px solid ${s.bd}`,
+        color: s.color,
         borderRadius: 50,
-        padding: '4px 12px',
+        padding: '5px 13px',
         fontSize: 12,
         fontWeight: 700,
       }}
     >
-      {cfg.label}
+      {s.label}
     </span>
   )
 }
@@ -47,8 +46,8 @@ export default function OrdersPage({ user }) {
     let active = true
     api
       .getUserOrders(tgId)
-      .then((data) => active && setOrders(data || []))
-      .catch((err) => active && setError(err.message))
+      .then((d) => active && setOrders(d || []))
+      .catch((e) => active && setError(e.message))
       .finally(() => active && setLoading(false))
     return () => {
       active = false
@@ -60,51 +59,57 @@ export default function OrdersPage({ user }) {
       <StatusBar />
       <HeaderBar />
 
-      <h2 style={{ color: 'var(--steel)', fontSize: 20, margin: '16px 4px' }}>
-        📋 سفارشات من
-      </h2>
+      <div className="fade-up" style={{ margin: '12px 2px 18px' }}>
+        <h2 style={{ color: '#fff', fontSize: 22, fontWeight: 800, margin: 0 }}>سفارش‌های من</h2>
+        <div style={{ color: 'var(--muted)', fontSize: 13, marginTop: 4 }}>
+          تاریخچه‌ی خریدها و وضعیت تحویل
+        </div>
+      </div>
 
-      {loading && (
-        <p style={{ color: 'var(--muted)', textAlign: 'center' }}>در حال بارگذاری...</p>
-      )}
-      {error && (
-        <p style={{ color: '#ff6b6b', textAlign: 'center' }}>{error}</p>
-      )}
+      {loading && <p style={{ color: 'var(--muted)', textAlign: 'center', marginTop: 30 }}>در حال بارگذاری…</p>}
+      {error && <p style={{ color: 'var(--danger)', textAlign: 'center' }}>{error}</p>}
       {!loading && !error && orders.length === 0 && (
-        <p style={{ color: 'var(--muted)', textAlign: 'center', marginTop: 40 }}>
-          هنوز سفارشی ثبت نکرده‌اید.
-        </p>
+        <div className="glass-card" style={{ padding: 0 }}>
+          <div className="empty-state" style={{ position: 'relative', zIndex: 1 }}>
+            <div className="empty-state-icon">🧾</div>
+            <div className="empty-state-title">هنوز سفارشی ثبت نکرده‌اید</div>
+            <div className="empty-state-msg">از تب تلگرام اولین خریدت رو انجام بده.</div>
+          </div>
+        </div>
       )}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {orders.map((o) => (
-          <SurfaceCard key={o.id}>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                marginBottom: 8,
-              }}
-            >
-              <span style={{ color: 'var(--steel)', fontWeight: 700, fontSize: 15 }}>
-                {o.product?.name}
-              </span>
-              <StatusBadge status={o.status} />
+        {orders.map((o, i) => (
+          <div
+            key={o.id}
+            className="glass-card fade-up"
+            style={{ padding: 16, animationDelay: `${i * 0.05}s` }}
+          >
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+                <div>
+                  <div style={{ color: '#fff', fontWeight: 700, fontSize: 15 }}>{o.product?.name}</div>
+                  <div style={{ color: 'var(--muted)', fontSize: 12, marginTop: 3 }}>
+                    گیرنده:{' '}
+                    <span className="num" style={{ color: 'var(--text-dim)' }}>@{o.recipient_username}</span>
+                  </div>
+                </div>
+                <Badge status={o.status} />
+              </div>
+              <div
+                className="glass-soft"
+                style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 12px' }}
+              >
+                <span style={{ color: 'var(--muted)', fontSize: 11 }}>کد رهگیری</span>
+                <span className="num" style={{ color: 'var(--light-blue)', fontSize: 13, fontWeight: 600 }}>
+                  {o.tracking_code}
+                </span>
+              </div>
+              <div className="num" style={{ color: 'var(--muted)', fontSize: 11, marginTop: 10, textAlign: 'left' }}>
+                {new Date(o.created_at).toLocaleDateString('en-CA')}
+              </div>
             </div>
-            <div style={{ color: 'var(--muted)', fontSize: 13, marginBottom: 4 }}>
-              کد رهگیری:{' '}
-              <span style={{ color: 'var(--light-blue)', direction: 'ltr' }}>
-                {o.tracking_code}
-              </span>
-            </div>
-            <div style={{ color: 'var(--muted)', fontSize: 13 }}>
-              گیرنده: @{o.recipient_username}
-            </div>
-            <div style={{ color: 'var(--muted)', fontSize: 12, marginTop: 6 }}>
-              {new Date(o.created_at).toLocaleDateString('fa-IR')}
-            </div>
-          </SurfaceCard>
+          </div>
         ))}
       </div>
     </div>

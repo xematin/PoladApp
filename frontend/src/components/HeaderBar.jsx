@@ -1,7 +1,7 @@
 import useTelegram from '../hooks/useTelegram'
 
 /**
- * HeaderBar — Telegram-style header: close button, title, menu.
+ * HeaderBar — minimal Telegram header: close, title, menu.
  */
 export default function HeaderBar() {
   const { close } = useTelegram()
@@ -12,38 +12,30 @@ export default function HeaderBar() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '10px 4px',
-        borderBottom: '0.5px solid var(--border-dark)',
+        padding: '8px 4px 12px',
       }}
     >
       <button
         onClick={close}
-        style={{
-          background: 'none',
-          border: 'none',
-          color: 'var(--glow-blue)',
-          fontSize: 15,
-          fontWeight: 600,
-        }}
+        className="chip"
+        style={{ cursor: 'pointer', color: 'var(--light-blue)' }}
       >
         بستن
       </button>
 
       <div style={{ textAlign: 'center' }}>
-        <div style={{ color: 'var(--steel)', fontWeight: 800, fontSize: 16 }}>
+        <div style={{ color: 'var(--text)', fontWeight: 700, fontSize: 14 }}>
           PoladApp
         </div>
-        <div style={{ color: 'var(--muted)', fontSize: 11 }}>mini app</div>
+        <div
+          className="num"
+          style={{ color: 'var(--muted)', fontSize: 10, letterSpacing: 1 }}
+        >
+          mini app
+        </div>
       </div>
 
-      <button
-        style={{
-          background: 'none',
-          border: 'none',
-          color: 'var(--muted)',
-          fontSize: 20,
-        }}
-      >
+      <button className="chip" style={{ cursor: 'pointer', padding: '6px 10px' }}>
         ⋯
       </button>
     </div>

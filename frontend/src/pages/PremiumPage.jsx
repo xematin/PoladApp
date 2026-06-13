@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import HeroCard from '../components/HeroCard'
-import SurfaceCard from '../components/SurfaceCard'
-import OrderSummary from '../components/OrderSummary'
-import GlassButton from '../components/GlassButton'
 import StatusBar from '../components/StatusBar'
 import HeaderBar from '../components/HeaderBar'
+import BrandHeader from '../components/BrandHeader'
+import TabSwitcher from '../components/TabSwitcher'
+import DurationSelector from '../components/DurationSelector'
+import PriceBox from '../components/PriceBox'
+import GlassButton from '../components/GlassButton'
 import api from '../api/client'
 
 export default function PremiumPage({ products, user, onNavigate }) {
@@ -14,11 +15,10 @@ export default function PremiumPage({ products, user, onNavigate }) {
   const [submitting, setSubmitting] = useState(false)
   const [message, setMessage] = useState(null)
 
-  // Default to the 3-month plan when products load
   useEffect(() => {
     if (products.length && selectedId == null) {
-      const threeMonth = products.find((p) => p.duration_months === 3)
-      setSelectedId(threeMonth ? threeMonth.id : products[0].id)
+      const six = products.find((p) => p.duration_months === 6)
+      setSelectedId(six ? six.id : products[0].id)
     }
   }, [products, selectedId])
 
@@ -26,6 +26,7 @@ export default function PremiumPage({ products, user, onNavigate }) {
     () => products.find((p) => p.id === selectedId) || null,
     [products, selectedId]
   )
+  const total = selected ? Number(selected.price_toman) : 0
 
   const handlePay = async () => {
     const recipient = username.trim().replace(/^@/, '')
@@ -47,13 +48,8 @@ export default function PremiumPage({ products, user, onNavigate }) {
         payment_method: 'NOWPAYMENTS',
       })
       const invoice = await api.createNowPaymentsInvoice(order.id)
-      if (invoice?.invoice_url) {
-        window.open(invoice.invoice_url, '_blank')
-      }
-      setMessage({
-        type: 'success',
-        text: `سفارش ثبت شد. کد رهگیری: ${order.tracking_code}`,
-      })
+      if (invoice?.invoice_url) window.open(invoice.invoice_url, '_blank')
+      setMessage({ type: 'success', text: `سفارش ثبت شد. کد رهگیری: ${order.tracking_code}` })
     } catch (err) {
       setMessage({ type: 'error', text: err.message || 'خطا در ثبت سفارش' })
     } finally {
@@ -61,78 +57,75 @@ export default function PremiumPage({ products, user, onNavigate }) {
     }
   }
 
-  const total = selected ? Number(selected.price_toman) : 0
-
   return (
     <div className="page">
       <StatusBar />
-      <HeaderBar onNavigate={onNavigate} />
+      <HeaderBar />
+      <BrandHeader />
 
-      <HeroCard
-        activeTab="premium"
-        onTabChange={(t) => t === 'stars' && onNavigate('stars')}
-        totalPrice={total}
-        months={selected?.duration_months}
-        durationOptions={products}
-        selectedId={selectedId}
-        onSelectDuration={setSelectedId}
-      />
+      <div className="fade-up" style={{ animationDelay: '0.05s' }}>
+        <TabSwitcher activeTab="premium" active="premium" onChange={(t) => t === 'stars' && onNavigate('stars')} />
+      </div>
 
-      {/* Username input */}
-      <SurfaceCard style={{ marginTop: 14 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ color: 'var(--glow-blue)', fontSize: 18 }}>🔍</span>
+      {/* Plan selection */}
+      <div className="fade-up" style={{ marginTop: 22, animationDelay: '0.1s' }}>
+        <div className="section-title">انتخاب پلن اشتراک</div>
+        <DurationSelector options={products} selectedId={selectedId} onSelect={setSelectedId} />
+      </div>
+
+      {/* Recipient */}
+      <div className="fade-up" style={{ marginTop: 22, animationDelay: '0.15s' }}>
+        <div className="section-title">گیرنده‌ی پرمیوم</div>
+        <div className="glass-soft" style={{ padding: '4px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ color: 'var(--light-blue)', fontSize: 17 }}>@</span>
           <input
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="telegram_username"
             style={{
               flex: 1,
-              background: 'var(--bg-input)',
-              border: '1px solid var(--border-dark)',
-              borderRadius: 12,
-              padding: '12px 14px',
-              color: 'var(--steel)',
-              fontSize: 15,
+              background: 'transparent',
+              border: 'none',
               outline: 'none',
+              color: 'var(--text)',
+              fontSize: 15,
+              padding: '13px 0',
               direction: 'ltr',
               textAlign: 'left',
             }}
           />
+          <span style={{ color: 'var(--muted)', fontSize: 16 }}>🔍</span>
         </div>
-      </SurfaceCard>
+      </div>
 
-      {/* Order summary */}
-      <SurfaceCard style={{ marginTop: 14 }}>
-        <OrderSummary
-          label={{ key: 'مدت', value: selected ? `${selected.duration_months} ماه` : '—' }}
-          amount={total}
-          total={total}
-        />
-      </SurfaceCard>
+      {/* Checkout card */}
+      <div className="glass-card fade-up" style={{ marginTop: 22, padding: 22, animationDelay: '0.2s' }}>
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <PriceBox totalPrice={total} months={selected?.duration_months} />
 
-      {message && (
-        <div
-          style={{
-            marginTop: 12,
-            color: message.type === 'error' ? '#ff6b6b' : 'var(--light-blue)',
-            fontSize: 13,
-            textAlign: 'center',
-          }}
-        >
-          {message.text}
+          <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap', margin: '16px 0' }}>
+            <span className="chip">⚡ تحویل آنی</span>
+            <span className="chip">🔒 پرداخت امن</span>
+            <span className="chip">🎯 ضمانت اصالت</span>
+          </div>
+
+          {message && (
+            <div
+              style={{
+                marginBottom: 12,
+                color: message.type === 'error' ? 'var(--danger)' : 'var(--ok)',
+                fontSize: 13,
+                textAlign: 'center',
+              }}
+            >
+              {message.text}
+            </div>
+          )}
+
+          <GlassButton variant="cta" onClick={handlePay} disabled={submitting}>
+            {submitting ? 'در حال پردازش…' : 'پرداخت و فعال‌سازی ←'}
+          </GlassButton>
         </div>
-      )}
-
-      {/* CTA */}
-      <div style={{ marginTop: 16 }}>
-        <GlassButton
-          variant="cta"
-          onClick={handlePay}
-          disabled={submitting}
-        >
-          {submitting ? 'در حال پردازش...' : 'پرداخت و فعالسازی ←'}
-        </GlassButton>
       </div>
     </div>
   )
