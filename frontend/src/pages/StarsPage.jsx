@@ -9,7 +9,7 @@ import Logo from '../components/Logo'
 import api from '../api/client'
 
 function formatToman(value) {
-  return Number(value || 0).toLocaleString('fa-IR')
+  return Number(value || 0).toLocaleString('en-US')
 }
 
 export default function StarsPage({ products, user, onNavigate }) {
@@ -64,7 +64,7 @@ export default function StarsPage({ products, user, onNavigate }) {
         style={{
           background: 'var(--bg-hero)',
           border: '1px solid var(--border-hero)',
-          borderRadius: 24,
+          borderRadius: 20,
           padding: 18,
           marginTop: 12,
         }}
@@ -78,7 +78,7 @@ export default function StarsPage({ products, user, onNavigate }) {
           }}
         >
           <Logo size={34} />
-          <span style={{ color: 'var(--steel)', fontWeight: 800, fontSize: 18 }}>
+          <span style={{ color: 'var(--text)', fontWeight: 800, fontSize: 18 }}>
             PoladApp
           </span>
         </div>
@@ -96,9 +96,9 @@ export default function StarsPage({ products, user, onNavigate }) {
             <button
               key={p.id}
               onClick={() => setSelectedId(p.id)}
-              className={isActive ? 'glass-active' : 'glass-inactive'}
+              className={isActive ? 'seg seg-active' : 'seg'}
               style={{
-                borderRadius: 18,
+                borderRadius: 14,
                 padding: '16px 18px',
                 display: 'flex',
                 alignItems: 'center',
@@ -107,15 +107,13 @@ export default function StarsPage({ products, user, onNavigate }) {
               }}
             >
               <span style={{ fontSize: 16, fontWeight: 700 }}>
-                ⭐ {p.stars_amount} استارز
+                ⭐ <span className="num">{p.stars_amount}</span> استارز
               </span>
-              <span
-                style={{
-                  color: isActive ? 'var(--light-blue)' : 'var(--steel)',
-                  fontWeight: 800,
-                }}
-              >
-                {formatToman(p.price_toman)} تومان
+              <span className="num" style={{ fontWeight: 700 }}>
+                {formatToman(p.price_toman)}
+                <span style={{ fontSize: 11, marginInlineStart: 4, opacity: 0.7 }}>
+                  تومان
+                </span>
               </span>
             </button>
           )
@@ -125,23 +123,13 @@ export default function StarsPage({ products, user, onNavigate }) {
       {/* Username input */}
       <SurfaceCard style={{ marginTop: 14 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ color: 'var(--glow-blue)', fontSize: 18 }}>🔍</span>
+          <span style={{ color: 'var(--muted)', fontSize: 18 }}>🔍</span>
           <input
+            className="input"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="telegram_username"
-            style={{
-              flex: 1,
-              background: 'var(--bg-input)',
-              border: '1px solid var(--border-dark)',
-              borderRadius: 12,
-              padding: '12px 14px',
-              color: 'var(--steel)',
-              fontSize: 15,
-              outline: 'none',
-              direction: 'ltr',
-              textAlign: 'left',
-            }}
+            style={{ direction: 'ltr', textAlign: 'left' }}
           />
         </div>
       </SurfaceCard>
@@ -150,7 +138,7 @@ export default function StarsPage({ products, user, onNavigate }) {
         <div
           style={{
             marginTop: 12,
-            color: message.type === 'error' ? '#ff6b6b' : 'var(--light-blue)',
+            color: message.type === 'error' ? '#ef4444' : 'var(--text)',
             fontSize: 13,
             textAlign: 'center',
           }}

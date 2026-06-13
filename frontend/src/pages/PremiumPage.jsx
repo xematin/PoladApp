@@ -81,23 +81,13 @@ export default function PremiumPage({ products, user, onNavigate }) {
       {/* Username input */}
       <SurfaceCard style={{ marginTop: 14 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ color: 'var(--glow-blue)', fontSize: 18 }}>🔍</span>
+          <span style={{ color: 'var(--muted)', fontSize: 18 }}>🔍</span>
           <input
+            className="input"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="telegram_username"
-            style={{
-              flex: 1,
-              background: 'var(--bg-input)',
-              border: '1px solid var(--border-dark)',
-              borderRadius: 12,
-              padding: '12px 14px',
-              color: 'var(--steel)',
-              fontSize: 15,
-              outline: 'none',
-              direction: 'ltr',
-              textAlign: 'left',
-            }}
+            style={{ direction: 'ltr', textAlign: 'left' }}
           />
         </div>
       </SurfaceCard>
@@ -105,7 +95,7 @@ export default function PremiumPage({ products, user, onNavigate }) {
       {/* Order summary */}
       <SurfaceCard style={{ marginTop: 14 }}>
         <OrderSummary
-          label={{ key: 'مدت', value: selected ? `${selected.duration_months} ماه` : '—' }}
+          label={{ key: 'مدت', value: selected ? `${selected.duration_months} ماه` : '—', mono: true }}
           amount={total}
           total={total}
         />
@@ -115,7 +105,7 @@ export default function PremiumPage({ products, user, onNavigate }) {
         <div
           style={{
             marginTop: 12,
-            color: message.type === 'error' ? '#ff6b6b' : 'var(--light-blue)',
+            color: message.type === 'error' ? '#ef4444' : 'var(--text)',
             fontSize: 13,
             textAlign: 'center',
           }}

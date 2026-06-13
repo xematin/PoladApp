@@ -1,7 +1,7 @@
 import useTelegram from '../hooks/useTelegram'
 
 /**
- * HeaderBar — Telegram-style header: close button, title, menu.
+ * HeaderBar — Telegram-style header: close button, title, menu (mono).
  */
 export default function HeaderBar() {
   const { close } = useTelegram()
@@ -13,7 +13,7 @@ export default function HeaderBar() {
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '10px 4px',
-        borderBottom: '0.5px solid var(--border-dark)',
+        borderBottom: '1px solid var(--border)',
       }}
     >
       <button
@@ -21,7 +21,7 @@ export default function HeaderBar() {
         style={{
           background: 'none',
           border: 'none',
-          color: 'var(--glow-blue)',
+          color: 'var(--muted)',
           fontSize: 15,
           fontWeight: 600,
         }}
@@ -30,10 +30,19 @@ export default function HeaderBar() {
       </button>
 
       <div style={{ textAlign: 'center' }}>
-        <div style={{ color: 'var(--steel)', fontWeight: 800, fontSize: 16 }}>
+        <div style={{ color: 'var(--text)', fontWeight: 800, fontSize: 16 }}>
           PoladApp
         </div>
-        <div style={{ color: 'var(--muted)', fontSize: 11 }}>mini app</div>
+        <div
+          style={{
+            color: 'var(--muted)',
+            fontSize: 11,
+            letterSpacing: 1,
+            fontFamily: "'JetBrains Mono', monospace",
+          }}
+        >
+          mini app
+        </div>
       </div>
 
       <button

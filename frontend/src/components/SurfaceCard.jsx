@@ -1,17 +1,11 @@
 /**
- * SurfaceCard — a rounded surface container used for inputs and summaries.
+ * SurfaceCard — a card container (mono theme).
  */
 export default function SurfaceCard({ children, className = '', style = {} }) {
   return (
     <div
-      className={className}
-      style={{
-        background: 'var(--bg-surface)',
-        border: '1px solid var(--border-dark)',
-        borderRadius: 20,
-        padding: 16,
-        ...style,
-      }}
+      className={`card ${className}`}
+      style={style}
     >
       {children}
     </div>

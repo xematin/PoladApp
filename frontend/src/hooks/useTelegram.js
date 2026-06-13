@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const BG_COLOR = '#080C14'
+const BG_COLOR = '#0a0a0a'
 
 /**
  * Safe access to the Telegram WebApp SDK with graceful browser fallback.
