@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap');
 @import './variables.css';
 
 @tailwind base;
@@ -15,7 +15,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--bg-deep);
-  color: var(--text);
+  color: var(--steel);
   font-family: 'Vazirmatn', system-ui, sans-serif;
   direction: rtl;
 }
@@ -25,184 +25,45 @@ body {
   background-color: var(--bg-deep);
 }
 
-/* ============================================================
-   Numbers — always JetBrains Mono, LTR, tabular
-   ============================================================ */
-.num {
-  font-family: 'JetBrains Mono', monospace;
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: 'tnum';
-  direction: ltr;
-  unicode-bidi: isolate;
-  letter-spacing: -0.01em;
+/* ---- Glass button base styles ---- */
+.glass-active {
+  background: var(--glass-active-bg);
+  color: var(--light-blue);
+  border-top: 1px solid var(--glass-active-border-top);
+  border-left: 1px solid var(--glass-active-border-left);
+  border-bottom: 1px solid var(--glass-active-border-bottom);
+  border-right: 1px solid var(--glass-active-border-right);
 }
 
-/* ============================================================
-   Cards
-   ============================================================ */
-.card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-card);
-  padding: 16px;
-}
-
-.card-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 14px;
-}
-
-/* ============================================================
-   Stat cards (like ByPassZone)
-   ============================================================ */
-.stat-card {
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px;
-}
-
-.stat-label {
-  font-size: 12px;
+.glass-inactive {
+  background: var(--glass-inactive-bg);
   color: var(--muted);
-  margin-bottom: 8px;
+  border-top: 1px solid var(--glass-inactive-border-top);
+  border-left: 1px solid var(--glass-inactive-border-left);
+  border-bottom: 1px solid var(--glass-inactive-border-bottom);
+  border-right: 1px solid var(--glass-inactive-border-right);
 }
 
-.stat-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-variant-numeric: tabular-nums;
-  direction: ltr;
-  font-size: 26px;
-  font-weight: 600;
-  color: #fff;
-  line-height: 1.1;
-}
-
-.stat-unit {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  margin-inline-start: 3px;
-}
-
-.stat-hint {
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 8px;
-}
-
-/* ============================================================
-   Buttons
-   ============================================================ */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 11px 18px;
-  border-radius: var(--r-btn);
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text);
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s ease, transform 0.08s ease, opacity 0.15s ease,
-    border-color 0.15s ease;
-}
-
-.btn:hover {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.btn:active {
-  transform: scale(0.98);
-}
-
-.btn-primary {
-  background: #ffffff;
-  color: #000000;
-  border-color: #ffffff;
-  font-weight: 700;
-}
-
-.btn-primary:hover {
-  background: #ededed;
-}
-
-.btn-sm {
-  padding: 8px 14px;
-  font-size: 13px;
-}
-
-.btn-block {
-  width: 100%;
-}
-
-.btn-danger-solid {
-  background: linear-gradient(135deg, #ef4444, #b91c1c);
-  color: #fff;
-  border-color: transparent;
-}
-
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* ============================================================
-   Segmented (tabs / pills) — active = white solid, black text
-   ============================================================ */
-.seg {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 11px 16px;
-  border-radius: 12px;
-  font-size: 14px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--muted);
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, transform 0.08s ease;
-}
-
-.seg:active {
-  transform: scale(0.98);
-}
-
-.seg-active {
-  background: #ffffff;
-  color: #000000;
-  border-color: #ffffff;
-  font-weight: 700;
-}
-
-/* ============================================================
-   Badges
-   ============================================================ */
-.badge {
-  display: inline-flex;
-  align-items: center;
+.glass-cta {
+  background: var(--cta-bg);
+  color: #ffffff;
+  font-weight: 800;
   border-radius: 50px;
-  padding: 4px 12px;
-  font-size: 12px;
-  font-weight: 700;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  background: rgba(255, 255, 255, 0.03);
+  border-top: 1px solid var(--cta-border-top);
+  border-left: 1px solid var(--cta-border-left);
+  border-bottom: 1px solid var(--cta-border-bottom);
+  border-right: 1px solid var(--cta-border-right);
 }
 
-/* ============================================================
-   Inputs
-   ============================================================ */
-input {
+/* Page wrapper leaves room for the floating nav */
+.page {
+  padding: 0 16px 100px 16px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+input,
+button {
   font-family: inherit;
 }
 
@@ -210,76 +71,13 @@ input::placeholder {
   color: var(--inactive-el);
 }
 
-.input {
-  width: 100%;
-  background: var(--bg-input);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 14px;
-  color: var(--text);
-  font-size: 15px;
-  outline: none;
-  transition: border-color 0.15s ease;
-}
-
-.input:focus {
-  border-color: rgba(255, 255, 255, 0.25);
-}
-
-/* ============================================================
-   Progress
-   ============================================================ */
-.progress {
-  height: 6px;
-  background: rgba(255, 255, 255, 0.07);
-  border-radius: 50px;
-  overflow: hidden;
-  margin: 10px 0 4px;
-}
-
-.progress-bar {
-  height: 100%;
-  background: #ffffff;
-  border-radius: 50px;
-}
-
-/* ============================================================
-   Empty state
-   ============================================================ */
-.empty-state {
-  text-align: center;
-  padding: 32px 16px;
-}
-
-.empty-state-icon {
-  font-size: 42px;
-  margin-bottom: 12px;
-  opacity: 0.7;
-}
-
-.empty-state-title {
-  color: var(--text);
-  font-weight: 700;
-  font-size: 15px;
-  margin-bottom: 6px;
-}
-
-.empty-state-msg {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-/* ============================================================
-   Layout helpers
-   ============================================================ */
-.page {
-  padding: 0 16px 100px 16px;
-  max-width: 480px;
-  margin: 0 auto;
-}
-
 button {
   cursor: pointer;
+  transition: transform 0.08s ease, filter 0.15s ease;
+}
+
+button:active {
+  transform: scale(0.97);
 }
 
 /* Hide scrollbars for a native-app feel */

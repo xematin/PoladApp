@@ -16,7 +16,7 @@ function initials(name) {
 }
 
 function formatToman(value) {
-  return Number(value || 0).toLocaleString('en-US')
+  return Number(value || 0).toLocaleString('fa-IR')
 }
 
 export default function ProfilePage({ user }) {
@@ -100,25 +100,24 @@ export default function ProfilePage({ user }) {
             width: 80,
             height: 80,
             borderRadius: '50%',
-            background: 'rgba(255,255,255,0.06)',
+            background: 'rgba(42,127,255,0.15)',
             border: '1px solid var(--border-hero)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'var(--text)',
+            color: 'var(--light-blue)',
             fontSize: 28,
             fontWeight: 800,
             direction: 'ltr',
-            textTransform: 'uppercase',
           }}
         >
           {initials(profile.full_name)}
         </div>
-        <div style={{ color: 'var(--text)', fontWeight: 800, fontSize: 18, marginTop: 12 }}>
+        <div style={{ color: 'var(--steel)', fontWeight: 800, fontSize: 18, marginTop: 12 }}>
           {profile.full_name}
         </div>
         {profile.username && (
-          <div className="num" style={{ color: 'var(--muted)', fontSize: 14 }}>
+          <div style={{ color: 'var(--muted)', fontSize: 14, direction: 'ltr' }}>
             @{profile.username}
           </div>
         )}
@@ -126,18 +125,22 @@ export default function ProfilePage({ user }) {
 
       {/* Stats */}
       <div style={{ display: 'flex', gap: 12 }}>
-        <div className="stat-card" style={{ flex: 1, textAlign: 'center' }}>
-          <div className="stat-value" style={{ fontSize: 24 }}>
+        <SurfaceCard style={{ flex: 1, textAlign: 'center' }}>
+          <div style={{ color: 'var(--glow-blue)', fontSize: 24, fontWeight: 800 }}>
             {profile.stats?.total_orders ?? 0}
           </div>
-          <div className="stat-hint">تعداد سفارشات</div>
-        </div>
-        <div className="stat-card" style={{ flex: 1, textAlign: 'center' }}>
-          <div className="stat-value" style={{ fontSize: 24 }}>
+          <div style={{ color: 'var(--muted)', fontSize: 13, marginTop: 4 }}>
+            تعداد سفارشات
+          </div>
+        </SurfaceCard>
+        <SurfaceCard style={{ flex: 1, textAlign: 'center' }}>
+          <div style={{ color: 'var(--glow-blue)', fontSize: 24, fontWeight: 800 }}>
             {formatToman(profile.balance)}
           </div>
-          <div className="stat-hint">موجودی کیف پول (تومان)</div>
-        </div>
+          <div style={{ color: 'var(--muted)', fontSize: 13, marginTop: 4 }}>
+            موجودی کیف پول (تومان)
+          </div>
+        </SurfaceCard>
       </div>
 
       {/* Referral */}
@@ -157,11 +160,11 @@ export default function ProfilePage({ user }) {
           }}
         >
           <span
-            className="num"
             style={{
-              color: 'var(--text)',
-              fontWeight: 600,
+              color: 'var(--light-blue)',
+              fontWeight: 800,
               fontSize: 18,
+              direction: 'ltr',
               letterSpacing: 1,
             }}
           >
@@ -172,11 +175,11 @@ export default function ProfilePage({ user }) {
           </GlassPill>
         </div>
         <div
-          className="num"
           style={{
             marginTop: 10,
             color: 'var(--muted)',
             fontSize: 12,
+            direction: 'ltr',
             wordBreak: 'break-all',
           }}
         >

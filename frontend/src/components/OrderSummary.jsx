@@ -1,20 +1,19 @@
 function formatToman(value) {
-  return Number(value || 0).toLocaleString('en-US')
+  return Number(value || 0).toLocaleString('fa-IR')
 }
 
 /**
- * OrderSummary — duration, amount, divider, and the gateway total.
- * Numbers use JetBrains Mono (English digits).
+ * OrderSummary — duration, amount, divider, and the gateway total in blue.
  */
 export default function OrderSummary({ label, amount, total }) {
   return (
     <div>
-      <Row k={label?.key || 'مدت'} v={label?.value || '—'} mono={label?.mono} />
-      <Row k="مبلغ" v={`${formatToman(amount)} تومان`} mono />
+      <Row k={label?.key || 'مدت'} v={label?.value || '—'} />
+      <Row k="مبلغ" v={`${formatToman(amount)} تومان`} />
       <div
         style={{
           height: 1,
-          background: 'var(--border)',
+          background: 'var(--border-dark)',
           margin: '12px 0',
         }}
       />
@@ -29,20 +28,20 @@ export default function OrderSummary({ label, amount, total }) {
           مبلغ قابل پرداخت
         </span>
         <span
-          className="num"
-          style={{ color: '#fff', fontSize: 18, fontWeight: 600 }}
+          style={{
+            color: 'var(--glow-blue)',
+            fontSize: 18,
+            fontWeight: 800,
+          }}
         >
-          {formatToman(total)}
-          <span style={{ color: 'var(--muted)', fontSize: 12, marginInlineStart: 4 }}>
-            تومان
-          </span>
+          {formatToman(total)} تومان
         </span>
       </div>
     </div>
   )
 }
 
-function Row({ k, v, mono }) {
+function Row({ k, v }) {
   return (
     <div
       style={{
@@ -52,10 +51,7 @@ function Row({ k, v, mono }) {
       }}
     >
       <span style={{ color: 'var(--muted)', fontSize: 14 }}>{k}</span>
-      <span
-        className={mono ? 'num' : undefined}
-        style={{ color: 'var(--text)', fontSize: 14, fontWeight: 600 }}
-      >
+      <span style={{ color: 'var(--steel)', fontSize: 14, fontWeight: 600 }}>
         {v}
       </span>
     </div>

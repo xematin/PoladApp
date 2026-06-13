@@ -6,12 +6,12 @@ import HeaderBar from '../components/HeaderBar'
 import api from '../api/client'
 
 const STATUS_CONFIG = {
-  PENDING: { label: 'در انتظار', bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.10)', color: '#8a8a8a' },
-  PAID: { label: 'پرداخت‌شده', bg: 'rgba(255,255,255,0.10)', border: 'rgba(255,255,255,0.18)', color: '#ededed' },
-  PROCESSING: { label: 'در حال پردازش', bg: 'rgba(255,255,255,0.07)', border: 'rgba(255,255,255,0.15)', color: '#ededed' },
-  DELIVERED: { label: 'تحویل‌شده', bg: 'rgba(74,222,128,0.10)', border: 'rgba(74,222,128,0.30)', color: '#4ade80' },
-  FAILED: { label: 'ناموفق', bg: 'rgba(239,68,68,0.10)', border: 'rgba(239,68,68,0.30)', color: '#ef4444' },
-  REFUNDED: { label: 'بازگشت‌خورده', bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.10)', color: '#8a8a8a' },
+  PENDING: { label: 'در انتظار', bg: 'rgba(255,255,255,0.04)', border: '#1a2535', color: '#6B7A8D' },
+  PAID: { label: 'پرداخت‌شده', bg: 'rgba(42,127,255,0.15)', border: '#1e3050', color: '#5BA4FF' },
+  PROCESSING: { label: 'در حال پردازش', bg: 'rgba(42,127,255,0.10)', border: '#1e3050', color: '#5BA4FF' },
+  DELIVERED: { label: 'تحویل‌شده', bg: 'rgba(26,58,42,0.4)', border: '#1a3a2a', color: '#5ddf9f' },
+  FAILED: { label: 'ناموفق', bg: 'rgba(58,26,26,0.4)', border: '#3a1a1a', color: '#ff6b6b' },
+  REFUNDED: { label: 'بازگشت‌خورده', bg: 'rgba(255,255,255,0.04)', border: '#1a2535', color: '#6B7A8D' },
 }
 
 function StatusBadge({ status }) {
@@ -94,18 +94,15 @@ export default function OrdersPage({ user }) {
             </div>
             <div style={{ color: 'var(--muted)', fontSize: 13, marginBottom: 4 }}>
               کد رهگیری:{' '}
-              <span className="num" style={{ color: 'var(--text)' }}>
+              <span style={{ color: 'var(--light-blue)', direction: 'ltr' }}>
                 {o.tracking_code}
               </span>
             </div>
             <div style={{ color: 'var(--muted)', fontSize: 13 }}>
-              گیرنده:{' '}
-              <span className="num" style={{ color: 'var(--text)' }}>
-                @{o.recipient_username}
-              </span>
+              گیرنده: @{o.recipient_username}
             </div>
-            <div className="num" style={{ color: 'var(--muted)', fontSize: 12, marginTop: 6 }}>
-              {new Date(o.created_at).toLocaleDateString('en-CA')}
+            <div style={{ color: 'var(--muted)', fontSize: 12, marginTop: 6 }}>
+              {new Date(o.created_at).toLocaleDateString('fa-IR')}
             </div>
           </SurfaceCard>
         ))}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 /**
- * StatusBar — emulates the Telegram status bar: time, brand, battery (mono).
+ * StatusBar — emulates the Telegram status bar: time, brand, battery.
  */
 export default function StatusBar() {
   const [time, setTime] = useState(() => formatTime())
@@ -21,22 +21,13 @@ export default function StatusBar() {
         fontSize: 13,
       }}
     >
-      <span className="num" style={{ color: 'var(--text)', fontWeight: 600 }}>
+      <span style={{ color: 'var(--steel)', fontWeight: 700, direction: 'ltr' }}>
         {time}
       </span>
-      <span
-        style={{
-          color: 'var(--muted)',
-          fontWeight: 700,
-          fontSize: 12,
-          letterSpacing: 1,
-        }}
-      >
+      <span style={{ color: 'var(--glow-blue)', fontWeight: 800, fontSize: 12 }}>
         ✈ TELEGRAM
       </span>
-      <span className="num" style={{ color: 'var(--text)', fontWeight: 600 }}>
-        🔋 100%
-      </span>
+      <span style={{ color: 'var(--steel)', fontWeight: 700 }}>🔋 100%</span>
     </div>
   )
 }

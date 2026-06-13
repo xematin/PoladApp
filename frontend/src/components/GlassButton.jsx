@@ -1,11 +1,7 @@
 /**
- * Button component — mono theme.
+ * GlassButton — a 3D glass-bordered button.
  *
- * variant:
- *   'cta' / 'primary' -> white solid button, black text
- *   'active'          -> segmented active (white solid)
- *   'inactive'        -> segmented inactive (ghost + border)
- *   'ghost'           -> bordered ghost button
+ * variant: 'active' | 'inactive' | 'cta'
  */
 export default function GlassButton({
   children,
@@ -14,34 +10,32 @@ export default function GlassButton({
   disabled = false,
   className = '',
   style = {},
-  radius,
-  block = false,
+  radius = 14,
   type = 'button',
 }) {
-  let cls = 'btn'
-  let extraStyle = {}
+  const variantClass =
+    variant === 'cta'
+      ? 'glass-cta'
+      : variant === 'active'
+      ? 'glass-active'
+      : 'glass-inactive'
 
-  if (variant === 'cta' || variant === 'primary') {
-    cls = 'btn btn-primary'
-    extraStyle = { padding: '15px 22px', fontSize: 15 }
-  } else if (variant === 'active') {
-    cls = 'seg seg-active'
-  } else if (variant === 'inactive') {
-    cls = 'seg'
-  } else if (variant === 'ghost') {
-    cls = 'btn'
+  const baseStyle = {
+    borderRadius: variant === 'cta' ? 50 : radius,
+    padding: variant === 'cta' ? '16px 24px' : '10px 16px',
+    fontWeight: variant === 'cta' ? 800 : 600,
+    fontSize: 15,
+    width: variant === 'cta' ? '100%' : undefined,
+    opacity: disabled ? 0.5 : 1,
+    transition: 'all 0.15s ease',
+    ...style,
   }
 
   return (
     <button
       type={type}
-      className={`${cls} ${className}`}
-      style={{
-        borderRadius: radius != null ? radius : 'var(--r-btn)',
-        width: block || variant === 'cta' ? '100%' : undefined,
-        ...extraStyle,
-        ...style,
-      }}
+      className={`${variantClass} ${className}`}
+      style={baseStyle}
       onClick={onClick}
       disabled={disabled}
     >

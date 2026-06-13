@@ -1,38 +1,39 @@
 :root {
-  /* ===== Mono (black) theme — inspired by ByPassZone ===== */
-
   /* Backgrounds */
-  --bg-deep: #0a0a0a;      /* page background */
-  --bg-surface: #141414;   /* cards */
-  --bg-hero: #121212;      /* hero / elevated card */
-  --bg-input: #0d0d0d;     /* input fields */
-  --bg-elev: rgba(255, 255, 255, 0.03);
+  --bg-deep: #080c14;
+  --bg-surface: #0f1824;
+  --bg-hero: #0d1a2d;
+  --bg-input: #080c14;
 
-  /* Text */
-  --text: #ffffff;
-  --steel: #ededed;        /* primary text (legacy alias) */
-  --muted: #8a8a8a;        /* secondary text */
-  --text-muted: #8a8a8a;
-  --inactive-el: #555555;
-
-  /* Accent — in mono the accent is white */
-  --accent: #ffffff;
-  --accent-text: #000000;
-  --glow-blue: #ffffff;    /* legacy alias used by older inline styles */
-  --light-blue: #ffffff;   /* legacy alias */
+  /* Text & accents */
+  --steel: #c8cdd6;
+  --glow-blue: #2a7fff;
+  --light-blue: #5ba4ff;
+  --muted: #6b7a8d;
+  --inactive-el: #2a3a4a;
 
   /* Borders */
-  --border: rgba(255, 255, 255, 0.09);
-  --border-dark: rgba(255, 255, 255, 0.09);
-  --border-hero: rgba(255, 255, 255, 0.12);
+  --border-dark: #1a2535;
+  --border-hero: #1e3050;
 
-  /* Status tints */
-  --ok: #4ade80;
-  --warn: #fbbf24;
-  --danger: #ef4444;
+  /* Glass — active */
+  --glass-active-bg: rgba(42, 127, 255, 0.2);
+  --glass-active-border-top: rgba(160, 210, 255, 0.55);
+  --glass-active-border-left: rgba(160, 210, 255, 0.45);
+  --glass-active-border-bottom: rgba(15, 50, 130, 0.5);
+  --glass-active-border-right: rgba(15, 50, 130, 0.45);
 
-  /* Radii */
-  --r-card: 16px;
-  --r-btn: 12px;
-  --r-pill: 50px;
+  /* Glass — inactive */
+  --glass-inactive-bg: rgba(255, 255, 255, 0.04);
+  --glass-inactive-border-top: rgba(255, 255, 255, 0.15);
+  --glass-inactive-border-left: rgba(255, 255, 255, 0.12);
+  --glass-inactive-border-bottom: rgba(0, 0, 0, 0.3);
+  --glass-inactive-border-right: rgba(0, 0, 0, 0.25);
+
+  /* CTA */
+  --cta-bg: #2a7fff;
+  --cta-border-top: rgba(200, 230, 255, 0.5);
+  --cta-border-left: rgba(200, 230, 255, 0.4);
+  --cta-border-bottom: rgba(10, 40, 120, 0.5);
+  --cta-border-right: rgba(10, 40, 120, 0.45);
 }

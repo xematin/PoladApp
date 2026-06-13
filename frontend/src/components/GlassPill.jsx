@@ -1,6 +1,6 @@
 /**
- * GlassPill — rounded (50px) segmented pill (mono theme).
- * Active = white solid + black text, inactive = ghost + border.
+ * GlassPill — a rounded (50px) glass pill, used for duration selectors,
+ * copy buttons and small toggles.
  */
 export default function GlassPill({
   children,
@@ -13,11 +13,16 @@ export default function GlassPill({
     <button
       type="button"
       onClick={onClick}
-      className={`${active ? 'seg seg-active' : 'seg'} ${className}`}
+      className={`${active ? 'glass-active' : 'glass-inactive'} ${className}`}
       style={{
         borderRadius: 50,
         padding: '10px 18px',
+        fontWeight: 700,
         fontSize: 14,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 6,
         ...style,
       }}
     >

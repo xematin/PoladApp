@@ -1,11 +1,18 @@
 import GlassPill from './GlassPill'
 
 /**
- * DurationSelector — pick a premium duration. Month numbers use mono font.
+ * DurationSelector — pick a premium duration. `options` is a list of products
+ * with `duration_months`; the selected one is highlighted.
  */
 export default function DurationSelector({ options, selectedId, onSelect }) {
   return (
-    <div style={{ display: 'flex', gap: 8, justifyContent: 'space-between' }}>
+    <div
+      style={{
+        display: 'flex',
+        gap: 8,
+        justifyContent: 'space-between',
+      }}
+    >
       {options.map((opt) => (
         <GlassPill
           key={opt.id}
@@ -13,8 +20,7 @@ export default function DurationSelector({ options, selectedId, onSelect }) {
           onClick={() => onSelect(opt.id)}
           style={{ flex: 1 }}
         >
-          <span className="num">{opt.duration_months}</span>
-          <span>ماه</span>
+          {opt.duration_months} ماه
         </GlassPill>
       ))}
     </div>

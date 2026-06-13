@@ -4,7 +4,7 @@ import PriceBox from './PriceBox'
 import DurationSelector from './DurationSelector'
 
 /**
- * HeroCard — signature card at the top of Premium/Stars pages (mono theme).
+ * HeroCard — the signature card at the top of Premium/Stars pages.
  */
 export default function HeroCard({
   activeTab,
@@ -23,12 +23,12 @@ export default function HeroCard({
         overflow: 'hidden',
         background: 'var(--bg-hero)',
         border: '1px solid var(--border-hero)',
-        borderRadius: 20,
+        borderRadius: 24,
         padding: 18,
         marginTop: 12,
       }}
     >
-      {/* Subtle white glow at the bottom */}
+      {/* Subtle radial glow at the bottom */}
       <div
         style={{
           position: 'absolute',
@@ -37,7 +37,7 @@ export default function HeroCard({
           bottom: -40,
           height: 120,
           background:
-            'radial-gradient(circle at 50% 100%, rgba(255,255,255,0.05), transparent 70%)',
+            'radial-gradient(circle at 50% 100%, rgba(42,127,255,0.12), transparent 70%)',
           pointerEvents: 'none',
         }}
       />
@@ -53,11 +53,23 @@ export default function HeroCard({
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <Logo size={34} />
-          <span style={{ color: 'var(--text)', fontWeight: 800, fontSize: 18 }}>
+          <span style={{ color: 'var(--steel)', fontWeight: 800, fontSize: 18 }}>
             PoladApp
           </span>
         </div>
-        <span className="badge">⚡ تحویل آنی!</span>
+        <span
+          style={{
+            background: 'rgba(42,127,255,0.15)',
+            color: 'var(--light-blue)',
+            fontSize: 12,
+            fontWeight: 700,
+            padding: '4px 10px',
+            borderRadius: 50,
+            border: '1px solid rgba(42,127,255,0.25)',
+          }}
+        >
+          ⚡ تحویل آنی!
+        </span>
       </div>
 
       <TabSwitcher active={activeTab} onChange={onTabChange} />
