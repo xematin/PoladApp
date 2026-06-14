@@ -37,7 +37,7 @@ function NavItem({ item, active, onNavigate }) {
         alignItems: 'center',
         gap: 4,
         padding: active ? '8px 16px' : '8px 12px',
-        borderRadius: 18,
+        borderRadius: 50,
         cursor: 'pointer',
         fontSize: 10.5,
         fontWeight: active ? 700 : 500,
