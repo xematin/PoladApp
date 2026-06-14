@@ -7,6 +7,7 @@ import TabSwitcher from '../components/TabSwitcher'
 import DurationSelector from '../components/DurationSelector'
 import PriceBox from '../components/PriceBox'
 import GlassButton from '../components/GlassButton'
+import { IconSearch, IconBolt, IconLock, IconGuarantee, IconCheck, IconArrow } from '../components/Icons'
 import api from '../api/client'
 
 export default function PremiumPage({ products, user, onNavigate }) {
@@ -97,7 +98,9 @@ export default function PremiumPage({ products, user, onNavigate }) {
                 textAlign: 'left',
               }}
             />
-            <span style={{ color: 'var(--muted)', fontSize: 16 }}>🔍</span>
+            <span style={{ color: 'var(--muted)', display: 'flex' }}>
+              <IconSearch size={17} />
+            </span>
           </div>
           <div style={{ color: 'var(--muted)', fontSize: 11.5, marginTop: 8, paddingInline: 4 }}>
             یوزرنیم گیرنده را بدون @ وارد کنید (حداقل ۳ کاراکتر)
@@ -117,9 +120,9 @@ export default function PremiumPage({ products, user, onNavigate }) {
             </div>
 
             <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 16 }}>
-              <span className="chip">⚡ تحویل آنی</span>
-              <span className="chip">🔒 پرداخت امن</span>
-              <span className="chip">🎯 ضمانت اصالت</span>
+              <span className="chip"><IconBolt size={13} /> تحویل آنی</span>
+              <span className="chip"><IconLock size={13} /> پرداخت امن</span>
+              <span className="chip"><IconGuarantee size={13} /> ضمانت اصالت</span>
             </div>
 
             {message && (
@@ -136,7 +139,8 @@ export default function PremiumPage({ products, user, onNavigate }) {
             )}
 
             <GlassButton variant="cta" onClick={handlePay} disabled={submitting}>
-              {submitting ? 'در حال پردازش…' : 'پرداخت و فعال‌سازی ←'}
+              {submitting ? 'در حال پردازش…' : 'پرداخت و فعال‌سازی'}
+              {!submitting && <IconArrow size={17} />}
             </GlassButton>
           </div>
         </div>
@@ -166,7 +170,7 @@ function StepDot({ n, done }) {
         boxShadow: done ? '0 4px 12px -4px var(--blue-glow)' : 'none',
       }}
     >
-      {done ? '✓' : n}
+      {done ? <IconCheck size={12} stroke={3} /> : n}
     </span>
   )
 }

@@ -1,4 +1,5 @@
 import useTelegram from '../hooks/useTelegram'
+import { IconDots } from './Icons'
 
 /**
  * HeaderBar — minimal Telegram header: close, title, menu.
@@ -35,8 +36,8 @@ export default function HeaderBar() {
         </div>
       </div>
 
-      <button className="chip" style={{ cursor: 'pointer', padding: '6px 10px' }}>
-        ⋯
+      <button className="chip" style={{ cursor: 'pointer', padding: '7px 9px', color: 'var(--muted)' }}>
+        <IconDots size={16} />
       </button>
     </div>
   )

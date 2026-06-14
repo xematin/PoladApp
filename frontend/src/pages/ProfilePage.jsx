@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import StatusBar from '../components/StatusBar'
 import HeaderBar from '../components/HeaderBar'
 import GlassPill from '../components/GlassPill'
+import { IconGift, IconCopy, IconCheck } from '../components/Icons'
 import api from '../api/client'
 
 const BOT_USERNAME = import.meta.env.VITE_BOT_USERNAME || 'PoladAppBot'
@@ -119,7 +120,9 @@ export default function ProfilePage({ user }) {
       <div className="glass-card fade-up" style={{ marginTop: 16, padding: 20, animationDelay: '0.14s' }}>
         <div style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-            <span style={{ fontSize: 18 }}>🎁</span>
+            <span style={{ color: 'var(--light-blue)', display: 'flex' }}>
+              <IconGift size={18} />
+            </span>
             <span style={{ color: '#fff', fontWeight: 700, fontSize: 15 }}>دعوت از دوستان</span>
           </div>
           <div style={{ color: 'var(--muted)', fontSize: 12.5, marginBottom: 14, lineHeight: 1.7 }}>
@@ -134,7 +137,8 @@ export default function ProfilePage({ user }) {
               {profile.referral_code}
             </span>
             <GlassPill active={copied} onClick={handleCopy}>
-              {copied ? '✓ کپی شد' : '📋 کپی لینک'}
+              {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
+              {copied ? 'کپی شد' : 'کپی لینک'}
             </GlassPill>
           </div>
 

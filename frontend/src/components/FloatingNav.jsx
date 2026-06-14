@@ -1,11 +1,13 @@
+import { IconShield, IconSend, IconOrders, IconUser } from './Icons'
+
 /**
  * FloatingNav — liquid-glass floating capsule with a glowing blue active pill.
  */
 const NAV_ITEMS = [
-  { key: 'vpn', label: 'VPN', icon: '🛡️' },
-  { key: 'premium', label: 'تلگرام', icon: '✈️' },
-  { key: 'orders', label: 'سفارشات', icon: '📋' },
-  { key: 'profile', label: 'پروفایل', icon: '👤' },
+  { key: 'vpn', label: 'VPN', Icon: IconShield },
+  { key: 'premium', label: 'تلگرام', Icon: IconSend },
+  { key: 'orders', label: 'سفارشات', Icon: IconOrders },
+  { key: 'profile', label: 'پروفایل', Icon: IconUser },
 ]
 
 export default function FloatingNav({ active, onNavigate }) {
@@ -32,13 +34,13 @@ export default function FloatingNav({ active, onNavigate }) {
         zIndex: 100,
       }}
     >
-      {NAV_ITEMS.map((item) => {
-        const isActive = active === item.key
+      {NAV_ITEMS.map(({ key, label, Icon }) => {
+        const isActive = active === key
         if (isActive) {
           return (
             <button
-              key={item.key}
-              onClick={() => onNavigate(item.key)}
+              key={key}
+              onClick={() => onNavigate(key)}
               style={{
                 background: 'linear-gradient(135deg, #2a7fff, #1657c7)',
                 borderRadius: 50,
@@ -49,19 +51,19 @@ export default function FloatingNav({ active, onNavigate }) {
                 border: '1px solid rgba(120,170,255,0.5)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 6,
+                gap: 7,
                 boxShadow: '0 8px 20px -6px var(--blue-glow)',
               }}
             >
-              <span>{item.icon}</span>
-              <span>{item.label}</span>
+              <Icon size={17} />
+              <span>{label}</span>
             </button>
           )
         }
         return (
           <button
-            key={item.key}
-            onClick={() => onNavigate(item.key)}
+            key={key}
+            onClick={() => onNavigate(key)}
             style={{
               background: 'none',
               border: 'none',
@@ -69,13 +71,13 @@ export default function FloatingNav({ active, onNavigate }) {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: 3,
+              gap: 4,
               fontSize: 10.5,
               padding: '4px 10px',
             }}
           >
-            <span style={{ fontSize: 18, opacity: 0.75 }}>{item.icon}</span>
-            <span>{item.label}</span>
+            <Icon size={19} style={{ opacity: 0.8 }} />
+            <span>{label}</span>
           </button>
         )
       })}

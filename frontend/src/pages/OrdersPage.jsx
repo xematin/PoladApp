@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import StatusBar from '../components/StatusBar'
 import HeaderBar from '../components/HeaderBar'
+import { IconOrders } from '../components/Icons'
 import api from '../api/client'
 
 const STATUS = {
@@ -71,7 +72,9 @@ export default function OrdersPage({ user }) {
       {!loading && !error && orders.length === 0 && (
         <div className="glass-card" style={{ padding: 0 }}>
           <div className="empty-state" style={{ position: 'relative', zIndex: 1 }}>
-            <div className="empty-state-icon">🧾</div>
+            <div className="empty-state-icon" style={{ color: 'var(--muted)', display: 'flex', justifyContent: 'center' }}>
+              <IconOrders size={42} stroke={1.5} />
+            </div>
             <div className="empty-state-title">هنوز سفارشی ثبت نکرده‌اید</div>
             <div className="empty-state-msg">از تب تلگرام اولین خریدت رو انجام بده.</div>
           </div>
